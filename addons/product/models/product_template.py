@@ -95,14 +95,52 @@ class ProductTemplate(models.Model):
         digits='Product Price',
         tracking=True,
         help="Price at which the product is sold to customers.",
+        compute='_compute_list_price_with_cost',
     )
+
     standard_price = fields.Float(
-        'Cost', compute='_compute_standard_price',
+        string='Cost', compute='_compute_standard_price',
         inverse='_set_standard_price', search='_search_standard_price',
-        digits='Product Price', groups="base.group_user",
+        digits='Product Price', groups="base.group_ui wantser",
         help="""Value of the product (automatically computed in AVCO).
         Used to value the product when the purchase cost is not known (e.g. inventory adjustment).
         Used to compute margins on sale orders.""")
+
+    cost_percentage = fields.Float(
+        string='Cost in Currency',
+        # compute='_compute_cost_from_percentage',
+        help='Cost in currency, computed based on cost percentage and sales price'
+    )
+
+    temp_input = fields.Float(
+        string='Initial Sales Price',
+        help='price before the cost is added.'
+    )
+
+    @api.onchange('cost_percentage', 'list_price')
+    def _compute_cost_from_percentage(self):
+        for product in self:
+            if product.cost_percentage and product.list_price:
+                product.standard_price = product.list_price * product.cost_percentage / 100
+
+    @api.depends('temp_input', 'standard_price')
+    def _compute_list_price_with_cost(self):
+        for product in self:
+            product.list_price = product.temp_input + product.standard_price
+
+
+
+    # total_sales_price = fields.Float(
+    #     string='Total Sales Price',
+    #     compute='_compute_total_sales_price',
+    #     store=True,
+    #     help='Sales Price including Cost'
+    # )
+    #
+    # @api.depends('list_price', 'standard_price')
+    # def _compute_total_sales_price(self):
+    #     for product in self:
+    #         product.total_sales_price = product.list_price + product.standard_price
 
     volume = fields.Float(
         'Volume', compute='_compute_volume', inverse='_set_volume', digits='Volume', store=True)

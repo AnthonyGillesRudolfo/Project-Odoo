@@ -20,7 +20,7 @@
             </div>
             <AccordionItem t-if="state.other_warehouses.length > 0">
                 <t t-set-slot="header">
-                    Inventory
+                    InventoryTESTING
                 </t>
                 <t t-set-slot="content">
                     <div class="border-start border-info text-muted small text-muted d-flex flex-column ps-2 ms-1">

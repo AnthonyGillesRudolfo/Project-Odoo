@@ -2284,6 +2284,11 @@ class AccountTax(models.Model):
             special_mode = 'total_excluded'
         else:
             special_mode = False
+
+        # Pakai field total_sales_price, tidak pakai field list_price
+        # if product:
+        #     price_unit = product.total_sales_price
+
         base_line = self._prepare_base_line_for_taxes_computation(
             None,
             partner_id=partner,

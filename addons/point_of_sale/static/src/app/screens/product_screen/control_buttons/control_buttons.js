@@ -82,7 +82,7 @@ export class ControlButtons extends Component {
             isSelected:
                 this.currentOrder.pricelist_id &&
                 pricelist.id === this.currentOrder.pricelist_id.id,
-            item: pricelist,
+            item: pricelist,z
         }));
 
         if (!this.pos.config.pricelist_id) {
