@@ -97,15 +97,6 @@ class ProductTemplate(models.Model):
         help="Price at which the product is sold to customers.",
         compute='_compute_list_price_with_cost',
     )
-
-    standard_price = fields.Float(
-        string='Cost', compute='_compute_standard_price',
-        inverse='_set_standard_price', search='_search_standard_price',
-        digits='Product Price', groups="base.group_ui wantser",
-        help="""Value of the product (automatically computed in AVCO).
-        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).
-        Used to compute margins on sale orders.""")
-
     cost_percentage = fields.Float(
         string='Cost in Currency',
         # compute='_compute_cost_from_percentage',
@@ -122,11 +113,24 @@ class ProductTemplate(models.Model):
         for product in self:
             if product.cost_percentage and product.list_price:
                 product.standard_price = product.list_price * product.cost_percentage / 100
+            else:
+                product.standard_price = 0
 
     @api.depends('temp_input', 'standard_price')
     def _compute_list_price_with_cost(self):
         for product in self:
             product.list_price = product.temp_input + product.standard_price
+
+    standard_price = fields.Float(
+        string='Cost', compute='_compute_standard_price',
+        inverse='_set_standard_price', search='_search_standard_price',
+        digits='Product Price', groups="base.group_user",
+        readonly=True, store=True,
+        help="""Value of the product (automatically computed in AVCO).
+        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).
+        Used to compute margins on sale orders.""")
+
+
 
 
 
