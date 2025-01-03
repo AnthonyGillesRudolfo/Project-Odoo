@@ -90,9 +90,9 @@
                 <field name="product_properties" columns="2"/>
             </xpath>
 
-            <xpath expr="//field[@name='standard_price']" position="after">
-                <field name="cost_percentage" string="Cost Percentage" placeholder="Cost Percentage (%)"/>
-            </xpath>
+<!--            <xpath expr="//field[@name='standard_price']" position="after">-->
+<!--                <field name="cost_percentage" string="Cost Percentage" placeholder="Cost Percentage (%)"/>-->
+<!--            </xpath>-->
 
             <xpath expr="//field[@name='list_price']" position="before">
                 <field name="temp_input" string="Initial Price" placeholder="Initial Price Input"/>

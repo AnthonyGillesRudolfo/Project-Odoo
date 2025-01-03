@@ -108,11 +108,11 @@ class ProductTemplate(models.Model):
         help='price before the cost is added.'
     )
 
-    @api.onchange('cost_percentage', 'list_price')
+    @api.onchange('cost_percentage', 'temp_input')
     def _compute_cost_from_percentage(self):
         for product in self:
-            if product.cost_percentage and product.list_price:
-                product.standard_price = product.list_price * product.cost_percentage / 100
+            if product.cost_percentage and product.temp_input:
+                product.standard_price = product.temp_input * product.cost_percentage
             else:
                 product.standard_price = 0
 
@@ -123,9 +123,9 @@ class ProductTemplate(models.Model):
 
     standard_price = fields.Float(
         string='Cost', compute='_compute_standard_price',
-        inverse='_set_standard_price', search='_search_standard_price',
+        inverse='_set_standard_price',
+        search='_search_standard_price',
         digits='Product Price', groups="base.group_user",
-        readonly=True, store=True,
         help="""Value of the product (automatically computed in AVCO).
         Used to value the product when the purchase cost is not known (e.g. inventory adjustment).
         Used to compute margins on sale orders.""")
