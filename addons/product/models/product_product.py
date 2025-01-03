@@ -50,21 +50,6 @@ class ProductProduct(models.Model):
     combination_indices = fields.Char(compute='_compute_combination_indices', store=True, index=True)
     is_product_variant = fields.Boolean(compute='_compute_is_product_variant')
 
-    cost_percentage = fields.Float(
-        string='Cost in Currency',
-        # compute='_compute_cost_from_percentage',
-        help='Cost in currency, computed based on cost percentage and sales price'
-    )
-
-    @api.onchange('cost_percentage', 'temp_input')
-    def _compute_cost_from_percentage(self):
-        for product in self:
-            if product.cost_percentage and product.temp_input:
-                product.standard_price = product.temp_input * product.cost_percentage
-            else:
-                product.standard_price = 0
-
-
 
     standard_price = fields.Float(
         'Cost', company_dependent=True,
@@ -298,10 +283,10 @@ class ProductProduct(models.Model):
 
         for product in self:
             if to_uom:
-                list_price = product.uom_id._compute_price(product.temp_input, to_uom)
+                list_price = product.uom_id._compute_price(product.list_price, to_uom)
             else:
-                list_price = product.temp_input
-            product.lst_price = list_price + product.price_extra + product.standard_price
+                list_price = product.list_price
+            product.lst_price = list_price + product.price_extra
 
     @api.depends_context('partner_id')
     def _compute_product_code(self):
