@@ -152,6 +152,7 @@
                                                 'field_digits': True,
                                             }"
                                         />
+                                        <field name="cost_percentage" widget="percentage"/>
 
                                         <span groups="uom.group_uom">
                                             <field name="uom_name" class="oe_inline"/>

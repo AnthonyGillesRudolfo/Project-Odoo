@@ -112,7 +112,7 @@ class ProductTemplate(models.Model):
     def _compute_cost_from_percentage(self):
         for product in self:
             if product.cost_percentage and product.temp_input:
-                product.standard_price = product.temp_input * product.cost_percentage/100
+                product.standard_price = product.temp_input * product.cost_percentage
             else:
                 product.standard_price = 0
 
