@@ -18,6 +18,7 @@
                         selectLine.bind="selectPaymentLine"
                         updateSelectedPaymentline.bind="updateSelectedPaymentline" />
                 </div>
+
                 <t t-call="point_of_sale.PaymentScreenButtons" />
                 <div t-attf-class="d-flex switchpane gap-2 mt-2">
                     <t t-call="point_of_sale.PaymentScreenBack" />
@@ -58,12 +59,13 @@
     </t>
 
     <t t-name="point_of_sale.PaymentScreenDue">
-        <section class="paymentlines-container rounded-3 bg-view"
-            t-att-class="{'paymentlines-empty': paymentLines.length === 0 }">
-            <div class="total text-center py-2 py-lg-4 text-success">
-                <t t-esc="this.env.utils.formatCurrency(currentOrder.getTotalDue())" />
-            </div>
-        </section>
+<!--        Hide Total Price In Payment Screen-->
+<!--        <section class="paymentlines-container rounded-3 bg-view"-->
+<!--            t-att-class="{'paymentlines-empty': paymentLines.length === 0 }">-->
+<!--            <div class="total text-center py-2 py-lg-4 text-success">-->
+<!--                <t t-esc="this.env.utils.formatCurrency(currentOrder.getTotalDue())" />-->
+<!--            </div>-->
+<!--        </section>-->
     </t>
 
     <t t-name="point_of_sale.PaymentScreenValidate">
@@ -101,6 +103,10 @@
     <t t-name="point_of_sale.PaymentScreenButtons">
         <div class="payment-buttons d-flex flex-column gap-2">
             <div class="d-flex flex-column flex-sm-row gap-2 w-100">
+                <div class="form-group w-100">
+                    <label for="order_code">Order Code</label>
+                        <input type="text" id="order_code" class="form-control" t-model="currentOrder.order_code" required="True" />
+                </div>
                 <t t-set="hasOptionalButtons" t-value="pos.config.iface_tipproduct and pos.config.tip_product_id or pos.config.iface_cashdrawer or pos.config.ship_later" />
                 <button class="button partner-button btn btn-light btn-lg w-100 w-md-50 lh-lg text-truncate"
                     t-att-class="{ 'highlight text-action': currentOrder.get_partner() }"
@@ -114,7 +120,7 @@
                 <button class="button js_invoice btn btn-light btn-lg d-flex justify-content-between align-items-baseline w-100 w-md-50 lh-lg" t-att-class="{ 'highlight active': currentOrder.is_to_invoice() }"
                     t-on-click="toggleIsToInvoice">
                     <span><i class="fa fa-file-text-o me-2" />Invoice</span>
-                    <i class="fa me-2" t-attf-class="{{ currentOrder.is_to_invoice() ? 'fa-check-square text-action' : 'fa-square-o' }}" /> 
+                    <i class="fa me-2" t-attf-class="{{ currentOrder.is_to_invoice() ? 'fa-check-square text-action' : 'fa-square-o' }}" />
                 </button>
             </div>
             <div t-if="(pos.config.iface_tipproduct and pos.config.tip_product_id) or pos.config.iface_cashdrawer or pos.config.ship_later" class="d-flex flex-column gap-2 w-100">
@@ -127,7 +133,7 @@
                 </button>
                 <button t-if="pos.config.iface_cashdrawer" class="button col js_cashdrawer btn btn-light py-3 text-start rounded-0 border-top border-start border-end"
                     t-on-click="openCashbox">
-                    <i class="fa fa-archive me-2" />Open Cashbox 
+                    <i class="fa fa-archive me-2" />Open Cashbox
                 </button>
                 <button t-if="pos.config.ship_later" class="button btn btn-light btn-lg d-flex justify-content-between align-items-baseline w-100 lh-lg" t-att-class="{ 'highlight active text-action': currentOrder.getShippingDate() }"
                     t-on-click="toggleShippingDatePicker">

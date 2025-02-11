@@ -250,6 +250,14 @@ class PosOrder(models.Model):
         price_unit = product.with_company(self.company_id)._compute_average_price(0, quantity, moves)
         return price_unit
 
+    order_code = fields.Char(string='Order code', required=True, default='/')
+
+    @api.constrains('order_code')
+    def _check_order_code(self):
+        for order in self:
+            if not order.order_code or order.order_code == '/':
+                raise UserError("Order code is required to process payment. Please provide a valid order code.")
+
     name = fields.Char(string='Order Ref', required=True, readonly=True, copy=False, default='/')
     last_order_preparation_change = fields.Char(string='Last preparation change', help="Last printed state of the order")
     date_order = fields.Datetime(string='Date', readonly=True, index=True, default=fields.Datetime.now)

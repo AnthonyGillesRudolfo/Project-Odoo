@@ -255,6 +255,8 @@ export class PaymentScreen extends Component {
         this.currentOrder.select_paymentline(line);
         this.numberBuffer.reset();
     }
+
+
     async validateOrder(isForceValidate) {
         this.numberBuffer.capture();
         if (!this.check_cash_rounding_has_been_well_applied()) {

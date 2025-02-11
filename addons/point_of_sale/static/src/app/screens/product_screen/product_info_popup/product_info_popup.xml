@@ -47,52 +47,53 @@
                 </div>
             </div>
             <div class="financials-order d-grid gap-2 mt-3" style="grid-template-columns: repeat(2, 1fr);">
-                <div class="section-financials text-start">
-                    <h3 class="section-title">Financials</h3>
-                    <div class="section-financials-body d-flex flex-column">
-                        <table class="table table-borderless mb-0">
-                            <tr>
-                                <td>Price excl. Tax:</td>
-                                <td><t t-esc="env.utils.formatCurrency(props.info.productInfo.all_prices.price_without_tax)"/></td>
-                            </tr>
-                            <tr t-if="_hasMarginsCostsAccessRights()">
-                                <td>Cost:</td>
-                                <td><t t-esc="props.info.costCurrency"/></td>
-                            </tr>
-                            <tr t-if="_hasMarginsCostsAccessRights()">
-                                <td>Margin:</td>
-                                <td><t t-esc="props.info.marginCurrency"/> (<t t-esc="props.info.marginPercent"/>%) </td>
-                            </tr>
-                        </table>
-                        <table class="table table-borderless">
-                            <t t-foreach="props.info.productInfo.pricelists" t-as="pricelist" t-key="pricelist.name">
-                                <tr>
-                                    <td t-esc="pricelist.name"/>
-                                    <td t-esc="env.utils.formatCurrency(pricelist.price)"/>
-                                </tr>
-                            </t>
-                        </table>
-                    </div>
-                </div>
-                <div class="section-order text-start">
-                    <h3 class="section-title">Order</h3>
-                    <div class="section-order-body">
-                        <table class="table table-borderless w-100 mb-0">
-                            <tr>
-                                <td>Total Price excl. Tax:</td>
-                                <td t-esc="props.info.orderPriceWithoutTaxCurrency" class="table-value"/>
-                            </tr>
-                            <tr t-if="_hasMarginsCostsAccessRights()">
-                                <td>Total Cost:</td>
-                                <td t-esc="props.info.orderCostCurrency" class="table-value"/>
-                            </tr>
-                            <tr t-if="_hasMarginsCostsAccessRights()">
-                                <td>Total Margin:</td>
-                                <td class="table-value"><t t-esc="props.info.orderMarginCurrency"/> (<t t-esc="props.info.orderMarginPercent"/>%)</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
+<!--                Hide Financial and Order Information on Product Information Point of Sales-->
+<!--                <div class="section-financials text-start">-->
+<!--                    <h3 class="section-title">Financials</h3>-->
+<!--                    <div class="section-financials-body d-flex flex-column">-->
+<!--                        <table class="table table-borderless mb-0">-->
+<!--                            <tr>-->
+<!--                                <td>Price excl. Tax:</td>-->
+<!--                                <td><t t-esc="env.utils.formatCurrency(props.info.productInfo.all_prices.price_without_tax)"/></td>-->
+<!--                            </tr>-->
+<!--                            <tr t-if="_hasMarginsCostsAccessRights()">-->
+<!--                                <td>Cost:</td>-->
+<!--                                <td><t t-esc="props.info.costCurrency"/></td>-->
+<!--                            </tr>-->
+<!--                            <tr t-if="_hasMarginsCostsAccessRights()">-->
+<!--                                <td>Margin:</td>-->
+<!--                                <td><t t-esc="props.info.marginCurrency"/> (<t t-esc="props.info.marginPercent"/>%) </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                        <table class="table table-borderless">-->
+<!--                            <t t-foreach="props.info.productInfo.pricelists" t-as="pricelist" t-key="pricelist.name">-->
+<!--                                <tr>-->
+<!--                                    <td t-esc="pricelist.name"/>-->
+<!--                                    <td t-esc="env.utils.formatCurrency(pricelist.price)"/>-->
+<!--                                </tr>-->
+<!--                            </t>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="section-order text-start">-->
+<!--                    <h3 class="section-title">Order</h3>-->
+<!--                    <div class="section-order-body">-->
+<!--                        <table class="table table-borderless w-100 mb-0">-->
+<!--                            <tr>-->
+<!--                                <td>Total Price excl. Tax:</td>-->
+<!--                                <td t-esc="props.info.orderPriceWithoutTaxCurrency" class="table-value"/>-->
+<!--                            </tr>-->
+<!--                            <tr t-if="_hasMarginsCostsAccessRights()">-->
+<!--                                <td>Total Cost:</td>-->
+<!--                                <td t-esc="props.info.orderCostCurrency" class="table-value"/>-->
+<!--                            </tr>-->
+<!--                            <tr t-if="_hasMarginsCostsAccessRights()">-->
+<!--                                <td>Total Margin:</td>-->
+<!--                                <td class="table-value"><t t-esc="props.info.orderMarginCurrency"/> (<t t-esc="props.info.orderMarginPercent"/>%)</td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <t t-set-slot="footer">
                 <button class="btn btn-primary btn-lg lh-lg" t-on-click="props.close">Ok</button>

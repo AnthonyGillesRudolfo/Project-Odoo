@@ -297,6 +297,7 @@
                 <field name="amount_total" sum="Amount total" widget="monetary" decoration-bf="1"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state not in ('draft','cancel')"/>
                 <field name="is_edited" readonly="1" optional="hide"/>
+                <field name="order_code" optional="hide"/>
             </list>
         </field>
     </record>
